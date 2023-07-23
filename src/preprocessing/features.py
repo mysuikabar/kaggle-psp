@@ -2,23 +2,8 @@ from typing import Dict, List
 
 import polars as pl
 
-from .consts import dialogs
+from .consts import cols_cat, cols_num, dialogs
 
-# columns type
-cols_cat = ["event_name", "name", "fqid", "text", "room_fqid"]
-cols_num = [
-    "page",
-    "room_coor_x",
-    "room_coor_y",
-    "screen_coor_x",
-    "screen_coor_y",
-    "hover_duration",
-    "elapsed_time_diff",
-    "screen_coor_x_diff",
-    "screen_coor_y_diff",
-]
-
-""" Aggregated Features """
 FEATURES_DICT: Dict[str, List[pl.Expr]] = {}
 
 FEATURES_DICT["basic_aggs"] = [

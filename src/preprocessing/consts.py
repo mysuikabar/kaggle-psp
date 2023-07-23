@@ -1,5 +1,19 @@
 level_groups = ["0-4", "5-12", "13-22"]
 
+cols_cat = ["event_name", "name", "fqid", "text", "room_fqid"]
+
+cols_num = [
+    "page",
+    "room_coor_x",
+    "room_coor_y",
+    "screen_coor_x",
+    "screen_coor_y",
+    "hover_duration",
+    "elapsed_time_diff",
+    "screen_coor_x_diff",
+    "screen_coor_y_diff",
+]
+
 dialogs = [
     "that",
     "this",
