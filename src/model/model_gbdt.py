@@ -60,6 +60,7 @@ class ModelXGB(ModelGBDT):
                 num_boost_round=num_boost_round,
                 evals=[(dtrain, "train"), (dvalid, "valid")],
                 early_stopping_rounds=early_stopping_rounds,
+                verbose_eval=50,
             )
         else:
             self.model = xgb.train(
@@ -67,6 +68,7 @@ class ModelXGB(ModelGBDT):
                 dtrain=dtrain,
                 num_boost_round=num_boost_round,
                 evals=[(dtrain, "train")],
+                verbose_eval=50,
             )
 
     def predict(self, X_te: Features) -> Label:
