@@ -1,3 +1,4 @@
+from logging import getLogger
 from typing import Callable, List
 
 import numpy as np
@@ -5,6 +6,8 @@ import pandas as pd
 from sklearn.model_selection import KFold
 
 from .model_base import ModelBase
+
+logger = getLogger(__name__)
 
 
 class Runner:
@@ -27,7 +30,11 @@ class Runner:
         oof = np.zeros_like(y)
 
         kf = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
-        for idx_tr, idx_va in kf.split(X=X, y=y):
+        logger.info("Start cross validation")
+
+        for i, (idx_tr, idx_va) in enumerate(kf.split(X=X, y=y)):
+            logger.info(f"Training fold {i} / {n_splits} ...")
+
             X_tr, X_va = X.iloc[idx_tr], X.iloc[idx_va]
             y_tr, y_va = y.iloc[idx_tr], y.iloc[idx_va]
 
@@ -40,8 +47,11 @@ class Runner:
             self.model_list.append(model)
             self.idx_list.append(idx_va)
 
+        logger.info("Cross validation is completed")
+
         return oof
 
     def save_models(self, model_name: str) -> None:
         for i, model in enumerate(self.model_list):
             model.save_model(f"{model_name}_fold{i}.pickle")
+        logger.info("Models are saved")

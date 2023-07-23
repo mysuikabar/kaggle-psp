@@ -1,4 +1,5 @@
 import gc
+from logging import getLogger
 from pathlib import Path
 
 import hydra
@@ -9,6 +10,8 @@ from sklearn.metrics import mean_squared_error
 from model.model_gbdt import ModelXGB
 from model.runner import Runner
 
+logger = getLogger(__name__)
+
 
 @hydra.main(config_path="conf", config_name="config")
 def main(config):
@@ -17,6 +20,8 @@ def main(config):
     TARGET_PATH = ROOT / "data/raw_data/labels.csv"
 
     # 特徴量・正解ラベルの読み込み
+    logger.info("Loading data ...")
+
     features = config.features.copy()
     feature = features.pop(0)
     df = pd.read_parquet(FEATURES_STORE_DIR / f"{feature}.parquet").set_index(
@@ -31,6 +36,8 @@ def main(config):
     df_target = pd.read_csv(TARGET_PATH, index_col="session_id")
     df = df.join(df_target)
     target_columns = df_target.columns
+
+    logger.info("Loading data is completed")
 
     del df_tmp, df_target
     gc.collect()
@@ -49,6 +56,7 @@ def main(config):
 
     # 評価
     mse = mean_squared_error(y, oof)
+    logger.info(f"MSE: {mse:.4f}")
 
 
 if __name__ == "__main__":
