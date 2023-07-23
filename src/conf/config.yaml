@@ -1,0 +1,6 @@
+defaults:
+  - model: xgboost
+
+preprocessing:
+  - basic_aggs
+  - dialog_aggs
