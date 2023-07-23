@@ -1,6 +1,14 @@
+hydra:
+  run:
+    dir: ./outputs/${now:%Y-%m-%d_%H-%M-%S}
+
 defaults:
   - model: xgboost
 
-preprocessing:
+experiment_name: xgb_01
+
+features:
   - basic_aggs
-  - dialog_aggs
+  - dialogs_aggs
+
+target: 1
