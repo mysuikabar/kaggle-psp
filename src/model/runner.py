@@ -32,7 +32,7 @@ class Runner:
         kf = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
         logger.info("Start cross validation")
 
-        for i, (idx_tr, idx_va) in enumerate(kf.split(X=X, y=y)):
+        for i, (idx_tr, idx_va) in enumerate(kf.split(X=X, y=y), start=1):
             logger.info(f"Training fold {i} / {n_splits} ...")
 
             X_tr, X_va = X.iloc[idx_tr], X.iloc[idx_va]
