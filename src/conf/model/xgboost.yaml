@@ -1,0 +1,4 @@
+model_name: xgboost
+params:
+  num_boost_round: 50
+  early_stopping_rounds: 10
